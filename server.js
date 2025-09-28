@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path'); 
 const app = express();
 const PORT = process.env.PORT || 5000;
 // Middleware
@@ -11,7 +12,7 @@ app.use(express.json());
 
 // Serve homepage
 app.get('/', (req, res) => {
-    res.sendFile('homepage.html', { root: __dirname });
+    res.sendFile(path.resolve(__dirname, 'homepage.html'));
 });
 
 // Health check endpoint
