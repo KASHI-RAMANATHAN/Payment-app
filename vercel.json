@@ -24,19 +24,19 @@
   ],
   "routes": [
     {
-      "src": "/",
+      "src": "./",
       "dest": "server.js"
     },
     {
-      "src": "/homepage.html",
-      "dest": "/homepage.html"
+      "src": "./homepage.html",
+      "dest": "./homepage.html"
     },
     {
-      "src": "/public-k/(.*)",
-      "dest": "/public-k/$1"
+      "src": "./public-k/(.*)",
+      "dest": "./public-k/$1"
     },
     {
-      "src": "/api/(.*)",
+      "src": "./api/(.*)",
       "dest": "server.js"
     },
     {
