@@ -7,11 +7,11 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public-k'));
+// app.use(express.static('public-k'));
 
 // Serve homepage
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public-k/homepage.html');
+    res.sendFile('homepage.html', { root: __dirname });
 });
 
 // Health check endpoint
