@@ -32,6 +32,10 @@
       "dest": "/homepage.html"
     },
     {
+      "src": "/LOGO.jpeg",
+      "dest": "/LOGO.jpeg"
+    },
+    {
       "src": "/public-k/(.*)",
       "dest": "/public-k/$1"
     },
