@@ -20,6 +20,33 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'homepage.html'));
 });
 
+app.post('/api/create-razorpay-order', async (req, res) => {
+    const { amount } = req.body;
+    const amountInPaise = Math.round(parseFloat(amount) * 100);
+
+    if (isNaN(amountInPaise) || amountInPaise < 100) {
+        return res.status(400).json({ error: 'Invalid amount. Minimum 1 INR required.' });
+    }
+
+    const options = {
+        amount: amountInPaise, 
+        currency: "INR",
+        receipt: `receipt_${Date.now()}`,
+    };
+
+    try {
+        const order = await razorpayInstance.orders.create(options);
+        res.json({
+            orderId: order.id,
+            amount: amount,
+            keyId: razorpayInstance.key_id 
+        });
+    } catch (error) {
+        console.error('Razorpay Order Creation Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
     res.json({ 
