@@ -130,10 +130,10 @@
                 if (!upiId || !upiId.includes('@')) { 
                     showMessage("Please enter a valid UPI ID (e.g., name@bank).", "#dc3545"); return; 
                 }
-                // if (RAZORPAY_KEY_ID === 'rzp_test_RN8in4dH58PvUH') {
-                //     showMessage("ERROR: Please update RAZORPAY_KEY_ID in the script.", "#dc3545");
-                //     return;
-                // }
+                if (RAZORPAY_KEY_ID === 'rzp_test_RN8in4dH58PvUH') {
+                    showMessage("ERROR: Please update RAZORPAY_KEY_ID in the script.", "#dc3545");
+                    return;
+                }
                 setLoading(true);
                 showMessage("Requesting order from server...", "#ffc107"); 
 
