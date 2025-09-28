@@ -16,6 +16,7 @@
         </script>
         <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     </head>
     <body>
         <div class="header" id="header">
@@ -75,15 +76,18 @@
             firebase.initializeApp(firebaseConfig);
             const auth = firebase.auth();
             let userData = {};
-
+            
+            const RAZORPAY_KEY_ID = 'rzp_test_RN8in4dH58PvUH'; 
+            const VERCEL_SERVER_URL = 'https://payment-app-671m.vercel.app';
+            
             document.addEventListener('DOMContentLoaded', function() {
                 const user = localStorage.getItem('user');
                 if (!user) { window.location.href = 'login.html'; return; }
                 userData = JSON.parse(user);
                 displayUserInfo(userData);
                 
-                // --- Attach Simulation Handler to the Button ---
-                document.getElementById('submit-payment-button').addEventListener('click', handleSimulation);
+                // --- Attach RAZORPAY HANDLER to the Button ---
+                document.getElementById('submit-payment-button').addEventListener('click', handleRazorpayCheckout);
 
                 // --- Navigation ---
                 document.querySelector('.hometag').addEventListener('click', () => { window.location.href = 'homepage.html'; });
@@ -111,7 +115,7 @@
                 }
             }
 
-            async function handleSimulation(e) {
+            async function handleRazorpayCheckout(e) { 
                 e.preventDefault();
                 
                 const amountInput = document.getElementById('payment-amount');
@@ -119,40 +123,76 @@
                 const amountValue = parseFloat(amountInput.value);
                 const upiId = upiInput.value.trim();
 
-                // 1. Basic Validation (Minimum amount and UPI format)
+                // 1. Basic Validation
                 if (isNaN(amountValue) || amountValue < 1.0) { 
                     showMessage("Please enter a valid amount (minimum 1.00 INR).", "#dc3545"); return; 
                 }
                 if (!upiId || !upiId.includes('@')) { 
                     showMessage("Please enter a valid UPI ID (e.g., name@bank).", "#dc3545"); return; 
                 }
-
-                // 2. Start Simulation (Visual Feedback)
-                setLoading(true);
-                showMessage("Initiating UPI connection and confirming funds...", "#ffc107"); // Yellowish for in-progress
-
-                // 3. Simulate Network Delay (2 seconds for a realistic user wait time)
-                await new Promise(resolve => setTimeout(resolve, 2000)); 
-
-                // 4. Determine Simulated Result (90% success rate for a demo)
-                const isSuccess = Math.random() < 0.9; 
-
-                if (isSuccess) {
-                    // SUCCESS PATH
-                    const txId = 'SIM_P2P_' + Math.random().toString(36).substring(2, 11).toUpperCase();
-                    showMessage(`Transfer successful! ₹${amountValue.toFixed(2)} sent to ${upiId}. Transaction ID: ${txId}`, "#28a745"); // Green
-                    
-                    // Clear inputs
-                    amountInput.value = '';
-                    upiInput.value = '';
-                } else {
-                    // FAILURE PATH
-                    showMessage(`Transfer failed. Recipient's bank is currently busy or network error. Please try again.`, "#dc3545"); // Red
+                if (RAZORPAY_KEY_ID === 'rzp_test_RN8in4dH58PvUH') {
+                    showMessage("ERROR: Please update RAZORPAY_KEY_ID in the script.", "#dc3545");
+                    return;
                 }
+                setLoading(true);
+                showMessage("Requesting order from server...", "#ffc107"); 
 
-                // 5. Reset button state
-                setLoading(false);
+                // 2. Get Order ID from your hosted Vercel server (Backend)
+                try {
+                    const response = await fetch(`${VERCEL_SERVER_URL}/api/create-razorpay-order`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ amount: amountValue.toFixed(2) }),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || 'Server error during order creation.');
+                    }
+
+                    const { orderId, amount } = await response.json();
+
+                    // 3. Configure and open Razorpay Checkout modal
+                    const options = {
+                        key: RAZORPAY_KEY_ID, 
+                        amount: amount * 100, // Amount must be in paise
+                        currency: "INR",
+                        name: "P2P Payment Project",
+                        description: `Transfer to ${upiId}`,
+                        order_id: orderId,
+                        handler: function (response) {
+                            // SUCCESS - This function confirms the payment was simulated successfully
+                            showMessage(`Transfer successful! Razorpay Payment ID: ${response.razorpay_payment_id}`, "#28a745");
+                            setLoading(false);
+                            amountInput.value = ''; 
+                            upiInput.value = '';
+                        },
+                        modal: {
+                            ondismiss: function() {
+                                // User closed the modal
+                                showMessage("Transfer cancelled by user.", "#dc3545");
+                                setLoading(false);
+                            }
+                        },
+                        prefill: {
+                            name: userData.name, 
+                            email: userData.email,
+                        },
+                        theme: {
+                            color: "rgb(29, 205, 159)"
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+
+                } catch (error) {
+                    console.error("Razorpay Error:", error.message);
+                    showMessage("Error: " + error.message, "#dc3545");
+                    setLoading(false);
+                }
             }
+
 
             // --- Utility Functions ---
             function setLoading(isLoading) {

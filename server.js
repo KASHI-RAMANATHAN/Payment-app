@@ -3,6 +3,11 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const path = require('path'); 
+const Razorpay = require('razorpay');
+const razorpayInstance = new Razorpay({
+    key_id: 'rzp_test_RN8in4dH58PvUH', // PASTE YOUR KEY ID
+    key_secret: 'GL3cka7vsZ0nU9MCdJCEhd5W', // PASTE YOUR KEY SECRET
+});
 const app = express();
 const PORT = process.env.PORT || 5000;
 // Middleware
