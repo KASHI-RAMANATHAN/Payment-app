@@ -1,0 +1,283 @@
+body{
+    background-color: black;
+    width: 1440px;
+    height: 1024px;
+    margin: 0;
+}
+@font-face {
+    font-family: 'NType82-Regular';
+    src:  url('fonts for project/NType82-Regular.otf');
+}
+@font-face {
+    font-family: 'Vortigra';
+    src: url('fonts for project/Vortigra.otf');
+}
+.header{
+    width: 1440px;
+    height: 80px; /*117*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.logo{
+    width: 103px;
+    height: 103px;
+    object-fit: cover;
+    margin-left: 148px;
+    cursor: pointer;
+}
+.hometag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.hometag,
+.personal-tag,
+.useful-info-tag{
+    cursor: pointer;
+}
+.personal-tag:hover,
+.useful-info-tag:hover,
+.hometag:hover{
+    color: rgb(22,153,118);
+}
+.personal-tag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.useful-info-tag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.login-button{
+    background-color: rgb(29, 205, 159);
+    font-family: 'NType82-Regular';
+    font-size: 28px;
+    color: black;
+    width: 200px;
+    height: 51px;
+    border: none;
+    border-radius: 26px;
+    margin-right: 148px;
+    cursor: pointer;
+    transition: background-color 0.2s,color 0.2s;
+}
+.login-button:hover{
+    background-color: #FFF8EC;
+    color: rgb(29, 205, 159);
+}
+
+.main-content{
+    width: 465px;
+    margin-left: 247px;
+    margin-top: 25px;
+}
+.tag-within,
+.tagline{
+    font-family: 'Vortigra';
+    font-size: 90px;
+    color: #FFF8EC;
+}
+.tag-within{
+    color: rgb(29, 205, 159);
+}
+.sub-content{
+    font-family: 'Vortigra';
+    font-size: 16px;
+    color: rgb(22,153,118);
+    margin-top: 31px;
+}
+.sub-sub-content{
+    color: #FFF8EC;
+}
+.check-it-out-button{
+    font-family: 'Vortigra';
+    font-size: 20px;
+    margin-top: 31px;
+    border-style: solid;
+    border-width: 1px;
+    width: 240px;
+    height: 51px;
+    background-color: black;
+    color: #FFF8EC;
+    border-color: #FFF8EC;
+    border-radius: 26px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+.check-it-out-button:hover{
+    background-color:#FFF8EC;
+    color: rgb(29, 205, 159);
+}
+.right-main-content{
+    margin-left: 136px;
+    margin-top: 60px;
+    position: relative;
+    width: 390px;
+    height: 635px;
+}
+.phone-1{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 240px;
+    height: 435px;
+    border-radius: 36px;
+    background-color: rgb(34, 34, 34);
+    border-style: solid;
+    border-color: #FFF8EC;
+    border-width: 0.5px;
+    position: relative;
+    transform: scale(0.85);
+    z-index: 50;
+    transition: z-index 0.2s, transform 0.5s, background-color 0.25s ease;
+}
+.phone-1:hover{
+    z-index: 200;
+    transform: scale(0.95);
+    background-color: rgba(34, 34, 34,0.8);
+    /* left: -20px; */
+}
+.signal{
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    position: absolute;
+    left: 193px;
+    top: 30px;
+}
+.client-name{
+    font-family: 'Vortigra';
+    font-size: 26px;
+    color: rgb(22,153,118);
+    top: 96px;
+    left: 22px;
+    position: absolute;
+}
+.sim-card{
+    width: 25.33px;
+    height: 25.33px;
+    object-fit: cover;
+    position: absolute;
+    top: 252.33px;
+    left: 40.33px;
+}
+.phone-2{
+    position: absolute;
+    top: -320px;
+    left: 150px;
+    width: 240px;
+    height: 435px;
+    border-radius: 36px;
+    background-color: rgba(34, 34, 34,0.8);
+    border-style: solid;
+    border-color: #FFF8EC;
+    border-width: 0.5px;
+    position: relative;
+    transform: scale(0.85);
+    z-index: 100;
+    transition: transform 0.5s,background-color 0.25s ease;
+}
+.phone-2:hover{
+    transform: scale(0.95);
+    background-color: rgb(34, 34, 34);
+}
+.phone-2:hover .top-card{
+
+    background-color: black;
+    width: 200px;
+    transform: translateX(-94.5px);
+    /* border-top-right-radius: 10px; */
+}
+.phone-2:hover .bottom-card{
+    width: 200px;
+    transform: translateX(-94.5px);
+    /* border-bottom-right-radius: 10px; */
+}
+.phone-2:hover .top-card-content{
+    color: #FFF8EC;
+}
+.balance-text{
+    font-family: 'Vortigra';
+    font-size: 14px;
+    color: #FFF8EC;
+    position: absolute;
+    top: 42px;
+    left: 90px;
+}
+.balance-amt{
+    font-family: 'Vortigra';
+    color: #FFF8EC;
+    position: absolute;
+    font-size: 32px;
+    top: 90px;
+    left: 50%;
+    transform: translate(-50%,-50%); /*check it, learn it*/
+    white-space: nowrap;
+}
+.denomination{
+    font-family: 'Vortigra';
+    color: rgb(29, 205, 159);
+    font-size: 32px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.card{
+    position: absolute;
+    top: 187px;
+    left: 134px;
+}
+.top-card{
+    height: 150px;
+    width: 106px;
+    background-color: rgb(34, 34, 34);
+    border: none;
+    position: relative;
+    border-top-left-radius: 10px;
+    transform: translateX(0);
+    transition: background-color 0.25s, width 0.25s, transform 0.25s;
+}
+.top-card-content{
+    position: absolute;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: rgb(34, 34, 34);
+    transition: color 0.2s ease;
+    top: 20px;
+    left: 10px;
+    width: 30px;
+}
+.bottom-card{
+    height: 44px;
+    width: 106px;
+    background-color: rgb(63,63,63);
+    border-bottom-left-radius: 10px;
+    position: relative;
+    transform: translateX(0);
+    transition: width 0.25s ease,right 0.5s ease, transform 0.25s ease;
+}
+.skeleton{
+    position: absolute;
+    width: 24.15px;
+    height: 16.8px;
+    top: 14px;
+    left: 9px;
+}
+.logo-s{
+    position: absolute;
+    top: 13px;
+    left: 83px;
+    width: 18px;
+    height: 18px;
+    object-fit: cover;
+    border-radius: 255.55px;
+}

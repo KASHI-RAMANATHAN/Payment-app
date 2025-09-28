@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Payment App</title>
+        <link rel="stylesheet" href="public-k/homepage.css">
+        <script>
+            // JavaScript to handle navigation
+            document.addEventListener('DOMContentLoaded', function() {
+                const loginButton = document.querySelector('.login-button');
+                loginButton.addEventListener('click', function() {
+                    window.location.href = 'login.html'; // Replace with your login page file name
+                });
+            });
+        </script>
+        
+    </head>
+    <body>
+        <div class="header">
+            <img src="LOGO.jpeg" class = "logo">
+            <div class="hometag">Home</div>
+            <div class="personal-tag">Personal</div>
+            <div class="useful-info-tag">Useful Info</div>
+            <button class="login-button">Log In</button>
+        </div>
+        <div class="web-content" style="display: flex;">
+            <div class="main-content">
+                <div class="tagline">
+                    The IT payment <span class="tag-within">gate</span>way
+                </div>
+                <div class="sub-content">
+                    Lorem ipsum dolor sit amet, 
+                    consectetur adipiscing elit. 
+                    Nam ultrices lacinia risus at convallis.
+                    Nam ultrices lacinia risus at convallis
+                    Donec in <span class="sub-sub-content">augue euismod</span>. 
+                </div>
+                <div class="sub-content">
+                    Nam ultrices lacinia risus at convallis
+                    ullamcorper dui vitae, gravida erat. 
+                    Maecenas porttitor rutrum sem, vel congue metus.
+                </div>
+                <button class="check-it-out-button">
+                    Check it out
+                </button>
+            </div>
+            <div class="right-main-content">
+                <div class="phone-1">
+                    <img src="svgs/entypo_signal.svg" class="signal">
+                    <div class="client-name">John Wick</div>
+                    <img src="svgs/sim-svg.svg" class="sim-card">
+                </div>
+                <div class="phone-2">
+                    <div class="balance-text">Balance</div>
+                    <div class="balance-amt">$192.5<span class="denomination">k</span></div>
+                    <div class="card">
+                        <div class="top-card">
+                            <div class="top-card-content">Encryption Data safety xxx xxx xxx</div>
+                        </div>
+                        <div class="bottom-card">
+                            <img src="svgs/master-card-skeleton.svg" class="skeleton">
+                            <img src="LOGO.jpeg" class="logo-s">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="position: absolute;
+                top: 700px;
+                left: 670px;
+                transform: scale(0.8);">
+                <img src="svgs/cards.svg" class="cards-mid">
+            </div>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,201 @@
+body{
+    background-color: black;
+    width: 1440px;
+    height: 1024px;
+    margin: 0;
+}
+@font-face {
+    font-family: 'NType82-Regular';
+    src:  url('fonts for project/NType82-Regular.otf');
+}
+@font-face {
+    font-family: 'Vortigra';
+    src: url('fonts for project/Vortigra.otf');
+}
+.header{
+    width: 1440px;
+    height: 80px; /*117*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.logo{
+    width: 103px;
+    height: 103px;
+    object-fit: cover;
+    margin-left: 148px;
+    cursor: pointer;
+}
+.hometag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.hometag,
+.personal-tag,
+.useful-info-tag{
+    cursor: pointer;
+}
+.personal-tag:hover,
+.useful-info-tag:hover,
+.hometag:hover{
+    color: rgb(22,153,118);
+}
+.personal-tag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.useful-info-tag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.login-button{
+    background-color: rgb(29, 205, 159);
+    font-family: 'NType82-Regular';
+    font-size: 28px;
+    color: black;
+    width: 200px;
+    height: 51px;
+    border: none;
+    border-radius: 26px;
+    margin-right: 148px;
+    cursor: pointer;
+    transition: background-color 0.2s,color 0.2s;
+}
+.login-button:hover{
+    background-color: #FFF8EC;
+    color: rgb(29, 205, 159);
+}
+.page-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-box{
+    max-width: 466px;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto;
+    height: 584px;
+    background-color: #FFF8EC;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 10px;
+    margin-top: 35px;
+    transform: scale(0.90);
+    align-items: center;
+}
+.password-field,
+.username-field{
+    width: 349px;
+    height: 66px;
+    border: none;
+    border-radius: 65px;
+    background-color: #141B23;
+    display: flex;
+    align-items: center;
+    margin-top: 100px;
+}
+.password-field{
+    margin-top: 36px;
+}
+.username-box{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 12.58px;
+    background:#141B23;
+    border-radius: 36px;
+    width: 250px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    margin-left: 10px;
+    color: white;
+}
+.username-box:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: white;
+}
+.profile{
+    margin-left: 10px;
+}
+.login{
+    color: white;
+    font-family: "Poppins",sans-serif;
+    font-weight: 500;
+    background-color: #169976;
+    width: 261.75px;
+    height: 50px;
+    border: none;
+    border-radius: 48.75px;
+    margin-top: 59px;
+    cursor: pointer;
+}
+.googleless-login,
+.google-login{
+    display: flex;
+    align-items: center;
+    font-family: "Poppins",sans-serif;
+    font-size: 13.5px;
+    font-weight: 300;
+    color: black;
+    border: none;
+    width: 225px;
+    height: 36px;
+    border-radius: 11px;
+    margin-top: 44px;
+    cursor: pointer;
+    /* margin-right: 10px; */
+    /* justify-content: space-between; */
+}
+.googleless-login{
+    transform: scale(0.85);
+    padding-left: 90px;
+    margin-top: 16px;
+}
+.glogo{
+    object-fit: contain;
+    width: 21.23px;
+    height: 18.82px;
+    margin-left: 15px;
+    margin-right: 11px;
+}
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    width: 100%;
+}
+.error-message {
+    min-height: 20px;
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+/* Responsive design */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .login, .signup, .google-login, .googleless-login {
+        padding: 12px;
+        font-size: 15px;
+    }
+}

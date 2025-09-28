@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SIGNUP Page</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway+Dots&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="public-k/signuppage.css">
+        
+        <!-- Firebase SDK -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <img src="LOGO.jpeg" class="logo">
+            <div class="hometag" onclick="window.location.href='homepage.html'">Home</div>
+            <div class="personal-tag">Personal</div>
+            <div class="useful-info-tag">Useful Info</div>
+            <button class="login-button" onclick="window.location.href='login.html'">Log In</button>
+        </div>
+        
+        <div class="page-content">
+            <div class="login-box">
+                <div class="name-field">
+                    <img src="svgs/Frame 19.svg" class="profile">
+                    <input type="text" id="name" placeholder="Name" class="username-box">
+                </div>
+                <div class="username-field">
+                    <img src="svgs/Frame 19.svg" class="profile">
+                    <input type="email" id="email" placeholder="Email ID" class="username-box">
+                </div>
+                <div class="password-field">
+                    <img src="svgs/Frame 18.svg" class="profile">
+                    <input type="password" id="password" placeholder="Password" class="username-box">
+                </div>
+                <div id="error-message" class="error-message"></div>
+                <button class="signup" id="signup-btn">SIGN UP</button>
+                <button class="google-login">
+                    <img src="svgs/google-logo.png" class="glogo">
+                    SIGN IN WITH GOOGLE
+                </button>
+            </div>
+        </div>
+
+        <script>
+            // ✅ YOUR REAL FIREBASE CONFIG - This will fix the error!
+            const firebaseConfig = {
+                apiKey: "AIzaSyCxZU0md5obSR4UG5UEemhDbZS6BNXuUAA",
+                authDomain: "payment-app-6c1e6.firebaseapp.com",
+                projectId: "payment-app-6c1e6",
+                storageBucket: "payment-app-6c1e6.firebasestorage.app",
+                messagingSenderId: "41084938775",
+                appId: "1:41084938775:web:2102d5bed58c1640a58a52",
+                measurementId: "G-Q847TSJDDL"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const signupBtn = document.getElementById('signup-btn');
+                const emailInput = document.getElementById('email');
+                const nameInput = document.getElementById('name');
+                const passwordInput = document.getElementById('password');
+                const errorMessage = document.getElementById('error-message');
+
+                signupBtn.addEventListener('click', async function() {
+                    if (signupBtn.disabled) return;
+
+                    const email = emailInput.value.trim();
+                    const name = nameInput.value.trim();
+                    const password = passwordInput.value.trim();
+
+                    clearMessages();
+
+                    // Client-side validation (Your existing validation is good)
+                    if (!email || !name || !password) {
+                        showError('Please fill in all fields');
+                        return;
+                    }
+                    if (password.length < 6) {
+                        showError('Password must be at least 6 characters');
+                        return;
+                    }
+
+                    signupBtn.disabled = true;
+                    signupBtn.textContent = 'Creating Account...';
+                    showMessage('Creating account...', '#ffc107'); // Yellowish color
+
+                    try {
+                        // 1. Create user with Firebase Auth
+                        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                        const user = userCredential.user;
+
+                        // 2. Update user profile with name
+                        await user.updateProfile({
+                            displayName: name
+                        });
+
+                        // 3. Send verification email
+                        // The URL below should point to the login page
+                        await user.sendEmailVerification({
+                            url: 'http://localhost:5000/login.html', 
+                            handleCodeInApp: false
+                        });
+
+                        // 4. Sign out after signup (user must verify first)
+                        await auth.signOut();
+
+                        // Success!
+                        showMessage('Account created! Please check your email to verify and then log in.', '#28a745'); // Green color
+                        signupBtn.textContent = 'Account Created!';
+                        signupBtn.style.backgroundColor = '#28a745';
+                        
+                        emailInput.value = '';
+                        nameInput.value = '';
+                        passwordInput.value = '';
+
+                        // Auto-redirect to login after 3 seconds
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 3000);
+
+                    } catch (error) {
+                        console.error('Signup error:', error);
+                        let errorMsg = 'Signup failed';
+
+                        // Simplified error handling
+                        if (error.code.includes('email-already-in-use')) {
+                            errorMsg = 'An account with this email already exists';
+                        } else if (error.code.includes('invalid-email')) {
+                            errorMsg = 'Please enter a valid email address';
+                        } else if (error.code.includes('weak-password')) {
+                            errorMsg = 'Password must be at least 6 characters';
+                        } else {
+                            errorMsg = error.message;
+                        }
+
+                        showError(errorMsg);
+                    } finally {
+                        // Re-enable button
+                        signupBtn.disabled = false;
+                        signupBtn.textContent = 'SIGN UP';
+                        signupBtn.style.backgroundColor = ''; // Reset color
+                    }
+                });
+
+                // Utility functions (Keep your existing ones)
+                // ... (showError, showMessage, clearMessages are assumed to be defined here)
+                function showError(message) {
+                    clearMessages();
+                    errorMessage.textContent = message;
+                    errorMessage.style.color = '#dc3545';
+                    errorMessage.style.display = 'block';
+                }
+
+                function showMessage(message, color) {
+                    clearMessages();
+                    errorMessage.textContent = message;
+                    errorMessage.style.color = color;
+                    errorMessage.style.display = 'block';
+                }
+
+                function clearMessages() {
+                    errorMessage.textContent = '';
+                    errorMessage.style.display = 'none';
+                }
+                
+                // Enter key support
+                document.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        signupBtn.click();
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

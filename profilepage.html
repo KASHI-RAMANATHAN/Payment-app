@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profile Page</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway+Dots&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="public-k/profilepage.css">
+        <!-- <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const home = document.querySelector('.hometag');
+                home.addEventListener('click',function(){
+                    window.location.href = 'homepage.html';
+                });
+            });     -->
+        </script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    </head>
+    <body>
+        <div class="header" id="header">
+            <img src="LOGO.jpeg" class="logo" onclick="window.location.href='homepage.html'">
+            <div class="hometag" onclick="window.location.href='homepage.html'">Home</div>
+            <div class="personal-tag">Personal</div>
+            <div class="useful-info-tag">Useful Info</div>
+            <button class="logout-button" onclick="logout()">Log Out</button>
+        </div>
+
+        <div class="profile-content" id="profile-content">
+            <div class="loading" id="loading">Loading...</div>
+            <div class="user-info" id="user-info" style="display: none;">
+                <div class="welcome-message">Hello, <span id="user-name-display" class="sn"></span>!</div>
+                <!-- <div class="user-name" id="user-name"></div> -->
+                <div class="user-email" id="user-email"></div>
+            </div>
+            <div class="payment-section" style="max-width: 400px; margin-top: 50px;">
+                <h2 style="font-family: 'Vortigra'; color: #FFF8EC; font-size: 30px; margin-bottom: 20px;">
+                    P2P Transfer Simulation (INR)
+                </h2>
+
+                <input type="number" id="payment-amount" placeholder="Amount (e.g., 50.00 INR)" 
+                       style="width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid rgb(29, 205, 159); background-color: #141B23; color: #FFF8EC; font-size: 18px;" 
+                       min="1.00" step="0.01">
+
+                <input type="text" id="recipient-upi" placeholder="Recipient's UPI ID (e.g., friend@bank)" 
+                       style="width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid rgb(29, 205, 159); background-color: #141B23; color: #FFF8EC; font-size: 18px;">
+
+                <div id="payment-message" role="alert" style="color: #dc3545; font-size: 16px; margin-bottom: 15px;"></div>
+                
+                <button id="submit-payment-button" class="logout-button" style="width: 100%; margin-right: 0; background-color: rgb(29, 205, 159);">
+                    <span id="button-text">Simulate Transfer</span>
+                </button>
+            </div>
+        </div>
+
+        <script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyCxZU0md5obSR4UG5UEemhDbZS6BNXuUAA",
+                authDomain: "payment-app-6c1e6.firebaseapp.com",
+                projectId: "payment-app-6c1e6",
+                storageBucket: "payment-app-6c1e6.firebasestorage.app",
+                messagingSenderId: "41084938775",
+                appId: "1:41084938775:web:2102d5bed58c1640a58a52",
+                measurementId: "G-Q847TSJDDL"
+            };
+            // Initialize Firebase (Only need app for auth.signOut)
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+            let userData = {};
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const user = localStorage.getItem('user');
+                if (!user) { window.location.href = 'login.html'; return; }
+                userData = JSON.parse(user);
+                displayUserInfo(userData);
+                
+                // --- Attach Simulation Handler to the Button ---
+                document.getElementById('submit-payment-button').addEventListener('click', handleSimulation);
+
+                // --- Navigation ---
+                document.querySelector('.hometag').addEventListener('click', () => { window.location.href = 'homepage.html'; });
+            });
+
+            function displayUserInfo(userData) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('user-info').style.display = 'block';
+                
+                // Display the user's name from localStorage
+                document.getElementById('user-name-display').textContent = userData.name; 
+                document.getElementById('user-email').textContent = userData.email;
+            }
+
+            async function logout() {
+                try {
+                    // Sign out from Firebase Auth (optional, but good practice)
+                    await auth.signOut(); 
+                } catch (error) {
+                    console.error("Firebase Sign Out Error:", error);
+                } finally {
+                    // Always clear localStorage and redirect
+                    localStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                }
+            }
+
+            async function handleSimulation(e) {
+                e.preventDefault();
+                
+                const amountInput = document.getElementById('payment-amount');
+                const upiInput = document.getElementById('recipient-upi');
+                const amountValue = parseFloat(amountInput.value);
+                const upiId = upiInput.value.trim();
+
+                // 1. Basic Validation (Minimum amount and UPI format)
+                if (isNaN(amountValue) || amountValue < 1.0) { 
+                    showMessage("Please enter a valid amount (minimum 1.00 INR).", "#dc3545"); return; 
+                }
+                if (!upiId || !upiId.includes('@')) { 
+                    showMessage("Please enter a valid UPI ID (e.g., name@bank).", "#dc3545"); return; 
+                }
+
+                // 2. Start Simulation (Visual Feedback)
+                setLoading(true);
+                showMessage("Initiating UPI connection and confirming funds...", "#ffc107"); // Yellowish for in-progress
+
+                // 3. Simulate Network Delay (2 seconds for a realistic user wait time)
+                await new Promise(resolve => setTimeout(resolve, 2000)); 
+
+                // 4. Determine Simulated Result (90% success rate for a demo)
+                const isSuccess = Math.random() < 0.9; 
+
+                if (isSuccess) {
+                    // SUCCESS PATH
+                    const txId = 'SIM_P2P_' + Math.random().toString(36).substring(2, 11).toUpperCase();
+                    showMessage(`Transfer successful! ₹${amountValue.toFixed(2)} sent to ${upiId}. Transaction ID: ${txId}`, "#28a745"); // Green
+                    
+                    // Clear inputs
+                    amountInput.value = '';
+                    upiInput.value = '';
+                } else {
+                    // FAILURE PATH
+                    showMessage(`Transfer failed. Recipient's bank is currently busy or network error. Please try again.`, "#dc3545"); // Red
+                }
+
+                // 5. Reset button state
+                setLoading(false);
+            }
+
+            // --- Utility Functions ---
+            function setLoading(isLoading) {
+                const submitButton = document.getElementById('submit-payment-button');
+                const buttonText = document.getElementById('button-text');
+
+                if (isLoading) {
+                    submitButton.disabled = true;
+                    submitButton.style.backgroundColor = '#6c757d'; // Dim the button while loading
+                    buttonText.textContent = "Transferring...";
+                } else {
+                    submitButton.disabled = false;
+                    submitButton.style.backgroundColor = 'rgb(29, 205, 159)'; // Restore original color
+                    buttonText.textContent = "Simulate Transfer";
+                }
+            }
+            
+            function showMessage(message, color) {
+                const paymentMessage = document.getElementById('payment-message');
+                paymentMessage.textContent = message;
+                paymentMessage.style.color = color;
+            }
+        </script>
+    </body>
+</html>

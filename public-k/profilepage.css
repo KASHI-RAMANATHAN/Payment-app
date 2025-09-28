@@ -1,0 +1,107 @@
+body{
+    background-color: black;
+    width: 1440px;
+    height: 1024px;
+    margin: 0;
+}
+@font-face {
+    font-family: 'NType82-Regular';
+    src:  url('fonts for project/NType82-Regular.otf');
+}
+@font-face {
+    font-family: 'Vortigra';
+    src: url('fonts for project/Vortigra.otf');
+}
+.header{
+    width: 1440px;
+    height: 80px; /*117*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.logo{
+    width: 103px;
+    height: 103px;
+    object-fit: cover;
+    margin-left: 148px;
+    cursor: pointer;
+}
+.hometag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.hometag,
+.personal-tag,
+.useful-info-tag{
+    cursor: pointer;
+}
+.personal-tag:hover,
+.useful-info-tag:hover,
+.hometag:hover{
+    color: rgb(22,153,118);
+}
+.personal-tag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.useful-info-tag{
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
+.logout-button,
+.login-button{
+    background-color: rgb(29, 205, 159);
+    font-family: 'NType82-Regular';
+    font-size: 28px;
+    color: black;
+    width: 200px;
+    height: 51px;
+    border: none;
+    border-radius: 26px;
+    margin-right: 148px;
+    cursor: pointer;
+    transition: background-color 0.2s,color 0.2s;
+}
+.logout-button:hover,
+.login-button:hover{
+    background-color: #FFF8EC;
+    color: rgb(29, 205, 159);
+}
+.profile-content {
+    margin-left: 247px; /* Adjust this to match your design */
+    margin-top: 50px;
+}
+.user-name{
+    font-family: 'Vortigra'; /* Use your specific font */
+    font-size: 20px;
+    color: rgb(29, 205, 159);
+}
+.user-email{
+    font-family: 'Vortigra'; /* Use your specific font */
+    font-size: 20px;
+    color: rgb(22,153,118);
+}
+.user-info {
+    color:rgb(22,153,118); /* Ensure the text is visible */
+}
+
+.welcome-message {
+    font-family: 'Vortigra'; /* Use your specific font */
+    font-size: 40px;
+    color: #FFF8EC;
+}
+.sn{
+    font-family: 'Vortigra'; /* Use your specific font */
+    font-size: 40px;
+    color: rgb(29, 205, 159);
+}
