@@ -199,3 +199,48 @@ body{
         font-size: 15px;
     }
 }
+.useful-info-tag-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.policy-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position below the 'Policies' link */
+    left: 0;
+    background-color: #141B23; /* Dark background */
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    z-index: 1000;
+    border-radius: 5px;
+    border: 1px solid rgb(29, 205, 159);
+    padding: 10px 0;
+}
+
+.policy-dropdown a {
+    color: #FFF8EC;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: 'NType82-Regular';
+    font-size: 16px;
+}
+
+.policy-dropdown a:hover {
+    background-color: rgb(29, 205, 159);
+    color: black;
+}
+
+.useful-info-tag-container:hover .policy-dropdown {
+    display: block;
+}
+/* Ensure the original tag style is applied to the visible part */
+.useful-info-tag {
+    /* Keep the original font, color, and size rules here */
+    font-family: 'NType82-Regular';
+    color: #FFF8EC;
+    font-size: 28px;
+    transition: color 0.2s;
+}
