@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public-k/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "fonts for project/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "svgs/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*\\.(css|js|html|jpeg|png|svg|otf|json))$",
+      "dest": "/$1"
+    }
+  ]
+}
