@@ -125,8 +125,9 @@
             let userData = {};
             
             const RAZORPAY_KEY_ID = 'rzp_test_RN8in4dH58PvUH'; 
-            const VERCEL_SERVER_URL = 'https://payment-app-671m.vercel.app';
-            
+            // const VERCEL_SERVER_URL = 'https://payment-app-671m.vercel.app';
+            // Change this line in profilepage.html for local testing:
+            const VERCEL_SERVER_URL = 'http://localhost:5000';
             document.addEventListener('DOMContentLoaded', function() {
                 const user = localStorage.getItem('user');
                 if (!user) { window.location.href = 'login.html'; return; }
