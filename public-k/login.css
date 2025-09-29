@@ -126,7 +126,7 @@ body{
 .username-box:focus {
     outline: none;
     border-color: #007bff;
-    background-color: white;
+    background-color:#141B23;
 }
 .profile{
     margin-left: 10px;
