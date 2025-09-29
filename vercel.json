@@ -40,6 +40,10 @@
       "dest": "/LOGO.jpeg"
     },
     {
+      "src": "/IMG_20250320_202816_735 1.png",
+      "dest": "/IMG_20250320_202816_735 1.png"
+    }, 
+    {
       "src": "/public-k/(.*)",
       "dest": "/public-k/$1"
     },
