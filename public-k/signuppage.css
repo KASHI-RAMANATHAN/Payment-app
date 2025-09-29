@@ -212,3 +212,112 @@ body{
     font-size: 28px;
     transition: color 0.2s;
 }
+
+
+.footer{
+    position: relative;
+    margin-top: 100px;
+    margin-left: 107px;
+}
+.footer-part-1{
+    display: flex;
+    align-items: center;
+}
+.footer-logo{
+    width: 103px;
+    height: 103px;
+    border: none;
+    border-radius: 55px;
+    top: -6px;
+    left: -5px;
+}
+.company-name{
+    font-family: 'Strjmono';
+    font-size: 55px;
+    color: #FFF8EC;
+}
+.line{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.company-tegline{
+    color:rgb(29, 205, 159);
+    width: 150px;
+    font-family: 'Poppins';
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+}
+.footer-part-2{
+    font-family: 'Poppins';
+    font-size: 22px;
+    width: 450px;
+    color: #FFF8EC;
+    margin-left: 10px;
+}
+.footer-part-3{
+    width: 384px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-left: 10px;
+}
+.facebookf,
+.youtubef,
+.instagramf,
+.linkedinf,
+.twitterf{
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+}
+.footer-part-4{
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+}
+.support,
+.live-chat,
+.faq{
+    color: #FFF8EC;
+    font-size: 20px;
+    font-family: 'Poppins';
+}
+.middle{
+    margin-left: 20px;
+}
+.phnumber,
+.mail{
+    color: #FFF8EC;
+    font-size: 20px;
+}
+.call{
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    margin-right: 10px;
+    
+}
+.mailf{
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-right: 25px;
+}
+.mail,
+.phnumber{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.qr{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-left: 500px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}

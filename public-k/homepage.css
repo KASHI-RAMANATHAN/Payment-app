@@ -12,6 +12,7 @@ body{
     font-family: 'Vortigra';
     src: url('fonts for project/Vortigra.otf');
 }
+
 .header{
     width: 1440px;
     height: 80px; /*117*/
@@ -326,4 +327,205 @@ body{
     color: #FFF8EC;
     font-size: 28px;
     transition: color 0.2s;
+}
+.whatwedo{
+    margin-left: 247px;
+    margin-top: 100px;
+    position: relative;
+}
+.heading{
+    font-family: 'Vortigra';
+    color: rgb(22,153,118);
+    font-size: 40px;
+}
+.subheading{
+    font-family: 'Vortigra';
+    color: #FFF8EC;
+    font-size: 32px;
+}
+.transac{
+    font-family: 'Strjmono';
+    color: rgb(29, 205, 159);
+    font-size: 32px;
+}
+.whatwedo-content{
+    font-family: 'Vortigra';
+    color: #FFF8EC;
+    font-size: 16px;
+    position: absolute;
+    left: 56px;
+    top: 110px;
+    width: 960px;
+}
+.Razorpay{
+    color: rgb(29, 205, 159);
+    font-size: 20px;
+    font-family: 'Strjmono';
+}
+.about-creator{
+    margin-left: 247px;
+    position: relative;
+    margin-top: 240px;
+}
+.heading-c{
+    font-family: 'Vortigra';
+    font-size: 40px;
+    color: rgb(22,153,118);
+}
+.creator{
+    font-family: 'Strjmono';
+    color: rgb(29, 205, 159);
+    font-size: 40px;
+    
+}
+.creator-content-part-1{
+    font-family: 'Vortigra';
+    font-size: 16px;
+    width: 720px;
+    position: absolute;
+    top: 90px;
+    left: 56px;
+    color: #FFF8EC;
+}
+.creator-content-part-2,
+.creator-content-part-3,
+.creator-content-part-4{
+    font-family: 'Vortigra';
+    font-size: 16px;
+    width: 720px;
+    position: absolute;
+    top: 207px;
+    left: 56px;
+    color: #FFF8EC;
+    
+}
+.creator-content-part-3{
+    top: 280px;
+    left: 56px;
+}
+.creator-content-part-4{
+    top: 340px;
+    left: 56px;
+    width: 50px;
+}
+.creator-profile{
+    width: 230px;
+    height: 230px;
+    object-fit: cover;
+    position: absolute;
+    left: 800px;
+    top: 100px;
+}
+.my-name{
+    font-family: 'Strjmono';
+    color: rgb(29, 205, 159);
+    font-size: 20px;
+}
+
+.footer{
+    position: relative;
+    margin-top: 550px;
+    margin-left: 107px;
+}
+.footer-part-1{
+    display: flex;
+    align-items: center;
+}
+.footer-logo{
+    width: 103px;
+    height: 103px;
+    border: none;
+    border-radius: 55px;
+    top: -6px;
+    left: -5px;
+}
+.company-name{
+    font-family: 'Strjmono';
+    font-size: 55px;
+    color: #FFF8EC;
+}
+.line{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.company-tegline{
+    color:rgb(29, 205, 159);
+    width: 150px;
+    font-family: 'Poppins';
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+}
+.footer-part-2{
+    font-family: 'Poppins';
+    font-size: 22px;
+    width: 450px;
+    color: #FFF8EC;
+    margin-left: 10px;
+}
+.footer-part-3{
+    width: 384px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-left: 10px;
+}
+.facebookf,
+.youtubef,
+.instagramf,
+.linkedinf,
+.twitterf{
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+}
+.footer-part-4{
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+}
+.support,
+.live-chat,
+.faq{
+    color: #FFF8EC;
+    font-size: 20px;
+    font-family: 'Poppins';
+}
+.middle{
+    margin-left: 20px;
+}
+.phnumber,
+.mail{
+    color: #FFF8EC;
+    font-size: 20px;
+}
+.call{
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    margin-right: 10px;
+    
+}
+.mailf{
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-right: 25px;
+}
+.mail,
+.phnumber{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.qr{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-left: 500px;
+    margin-bottom: 20px;
+    cursor: pointer;
 }
