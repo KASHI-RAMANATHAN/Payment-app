@@ -6,11 +6,11 @@ body{
 }
 @font-face {
     font-family: 'NType82-Regular';
-    src:  url('fonts for project/NType82-Regular.otf');
+    src:  url('../fonts for project/NType82-Regular.otf');
 }
 @font-face {
     font-family: 'Vortigra';
-    src: url('fonts for project/Vortigra.otf');
+    src: url('../fonts for project/Vortigra.otf');
 }
 
 .header{
