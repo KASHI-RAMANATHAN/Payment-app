@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const path = require('path'); 
-const Razorpay = require('razorpay');
+const Razorpay = require('razorpay')
 const razorpayInstance = new Razorpay({
     key_id: process.env.KEY_ID, // PASTE YOUR KEY ID
     key_secret: process.env.KEY_SECRET, // PASTE YOUR KEY SECRET
