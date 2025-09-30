@@ -24,6 +24,14 @@
     {
       "src": "LOGO.jpeg",
       "use": "@vercel/static"
+    },
+    {
+      "src": "/myface.svg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "/LOGO-top.svg",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -44,8 +52,8 @@
       "dest": "/LOGO-top.svg"
     },
     {
-      "src": "/myface.jpeg",
-      "dest": "/myface.jpeg"
+      "src": "/myface.svg",
+      "dest": "/myface.svg"
     }, 
     {
       "src": "/public-k/(.*)",
