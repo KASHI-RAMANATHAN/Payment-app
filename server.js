@@ -11,8 +11,16 @@ const razorpayInstance = new Razorpay({
 const transactionHistory = {}; 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const VERCEL_DOMAIN = 'https://pacepayment.vercel.app/'; 
+const corsOptions = {
+    // This allows only your Vercel domain to make requests
+    origin: VERCEL_DOMAIN, 
+    methods: 'GET,POST',
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true,
+};
+app.use(cors(corsOptions));
 // Middleware
-app.use(cors());
 app.use(express.json());
 // app.use(express.static('public-k'));
 
