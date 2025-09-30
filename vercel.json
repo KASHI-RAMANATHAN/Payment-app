@@ -40,6 +40,10 @@
       "dest": "/LOGO.jpeg"
     },
     {
+      "src": "/LOGO-top.svg",
+      "dest": "/LOGO-top.svg"
+    },
+    {
       "src": "/myface.jpeg",
       "dest": "/myface.jpeg"
     }, 
