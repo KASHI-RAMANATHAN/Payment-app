@@ -30,7 +30,7 @@
         <div class="header" id="header">
             <img src="LOGO.jpeg" class="logo" onclick="window.location.href='homepage.html'">
             <div class="hometag" onclick="window.location.href='homepage.html'">Home</div>
-            <div class="personal-tag">Personal</div>
+            <div class="personal-tag">Dashboard</div>
             <div class="useful-info-tag-container">
                 <div class="useful-info-tag">Policies</div>
                 <div class="policy-dropdown">
@@ -148,7 +148,12 @@
                 // --- Navigation ---
                 document.querySelector('.hometag').addEventListener('click', () => { window.location.href = 'homepage.html'; });
             });
-
+            document.addEventListener('DOMContentLoaded', function() {
+                const loginButton = document.querySelector('.personal-tag');
+                loginButton.addEventListener('click', function() {
+                    window.location.href = 'dashboard.html'; // Replace with your login page file name
+                });
+            });
             function displayUserInfo(userData) {
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('user-info').style.display = 'block';
@@ -198,7 +203,10 @@
                     const response = await fetch(`${VERCEL_SERVER_URL}/api/create-razorpay-order`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ amount: amountValue.toFixed(2) }),
+                        body: JSON.stringify({ amount: amountValue.toFixed(2),
+                            userEmail: userData.email,
+                            recipient: upiId
+                         }),
                     });
 
                     if (!response.ok) {

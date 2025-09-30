@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pace | User Dashboard</title>
+    <link rel="stylesheet" href="public-k/profilepage.css">
+    <link rel="icon" href="/LOGO-top.svg" type="image/svg+xml" /> 
+    <link rel="shortcut icon" href="/LOGO-top.svg" type="image/svg+xml" />
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Strjmono';
+            src: url('fonts for project/Strjmono.otf') format('opentype');
+        }
+        .dashboard-content { margin-left: 247px; margin-top: 50px; color: #FFF8EC; }
+        .dashboard-welcome { font-family: 'Vortigra'; font-size: 40px; color: rgb(29, 205, 159); margin-bottom: 30px; }
+        .dashboard-stat { font-family: 'NType82-Regular'; font-size: 20px; margin-bottom: 10px; }
+        .dashboard-login-prompt { font-family: 'Vortigra'; font-size: 30px; color: #FFF8EC; margin-top: 100px; }
+        .total-spent { color: rgb(22,153,118); font-size: 30px; font-weight: bold; }
+        .login-button-small { /* Style to match your existing buttons */
+            background-color: rgb(29, 205, 159); 
+            color: black; 
+            font-family: 'NType82-Regular';
+            font-size: 20px; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 26px; 
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .login-button-small:hover{
+            background-color:#FFF8EC;
+            color: rgb(29, 205, 159);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="LOGO.jpeg" class="logo" onclick="window.location.href='homepage.html'">
+        <div class="hometag" onclick="window.location.href='homepage.html'">Home</div>
+        <div class="personal-tag" onclick="window.location.href='dashboard.html'">Dashboard</div>
+        <div class="useful-info-tag-container">
+            <div class="useful-info-tag">Policies</div>
+            <div class="policy-dropdown">
+                <a href="refund-policy.html" class="dropdown-link">Refund Policy</a>
+                <a href="shipping-policy.html" class="dropdown-link">Shipping Policy</a>
+                <a href="contact-us.html" class="dropdown-link">Contact Us</a>
+            </div>
+        </div>
+        <button class="login-button" id="auth-button" onclick="handleAuthClick()">Log In</button>
+    </div>
+
+    <div class="dashboard-content" id="dashboard-content">
+        </div>
+
+    <script>
+        // Use the Firebase Config from profilepage.html
+        const firebaseConfig = {
+            apiKey: "AIzaSyCxZU0md5obSR4UG5UEemhDbZS6BNXuUAA",
+            authDomain: "payment-app-6c1e6.firebaseapp.com",
+            projectId: "payment-app-6c1e6",
+            storageBucket: "payment-app-6c1e6.firebasestorage.app",
+            messagingSenderId: "41084938775",
+            appId: "1:41084938775:web:2102d5bed58c1640a58a52",
+            measurementId: "G-Q847TSJDDL"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const VERCEL_SERVER_URL = 'https://payment-app-671m.vercel.app'; // Your Vercel URL
+        
+        let localUserData = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            auth.onAuthStateChanged(user => {
+                const userString = localStorage.getItem('user');
+                if (user && userString) {
+                    localUserData = JSON.parse(userString);
+                    document.getElementById('auth-button').textContent = 'Log Out';
+                    document.getElementById('auth-button').onclick = logout;
+                    renderDashboard(localUserData);
+                } else {
+                    document.getElementById('auth-button').textContent = 'Log In';
+                    document.getElementById('auth-button').onclick = () => window.location.href = 'login.html';
+                    renderLoginPrompt();
+                }
+            });
+        });
+
+        function handleAuthClick() {
+            // This is overwritten by auth.onAuthStateChanged
+        }
+        
+        function renderLoginPrompt() {
+            document.getElementById('dashboard-content').innerHTML = `
+                <div class="dashboard-login-prompt">
+                    Please log in to view your payment dashboard.
+                </div>
+                <button class="login-button-small" onclick="window.location.href='login.html'">
+                    Go to Login
+                </button>
+            `;
+        }
+
+        async function renderDashboard(userData) {
+            document.getElementById('dashboard-content').innerHTML = `
+                <div class="dashboard-welcome">Welcome, ${userData.name}!</div>
+                <div class="dashboard-stat">Email: ${userData.email}</div>
+                <div class="dashboard-stat">Total Payments Sent: <span id="total-spent-display">...loading...</span></div>
+                <h2 style="font-family: 'Vortigra'; color: #FFF8EC; margin-top: 40px;">Transaction History (Simulated)</h2>
+                <div id="transaction-history" style="max-height: 400px; overflow-y: auto;">...loading...</div>
+            `;
+            
+            await fetchTransactionHistory(userData.email);
+        }
+        
+        async function fetchTransactionHistory(userEmail) {
+            try {
+                // Call the new server endpoint to get history (stored via localStorage)
+                const response = await fetch(`${VERCEL_SERVER_URL}/api/payments/history?email=${userEmail}`, {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const history = await response.json();
+                
+                let totalSpent = 0;
+                let historyHTML = '';
+
+                if (history.length === 0) {
+                    historyHTML = '<p style="color: #6c757d;">No transactions recorded yet.</p>';
+                } else {
+                    history.forEach(tx => {
+                        // Razorpay amounts are in paise, so we divide by 100
+                        const amountINR = (tx.amount / 100).toFixed(2);
+                        totalSpent += parseFloat(amountINR);
+
+                        historyHTML += `
+                            <div style="padding: 10px; margin-bottom: 8px; background-color: #1a1a1a; border-left: 5px solid ${tx.status === 'success' ? 'rgb(29, 205, 159)' : '#dc3545'};">
+                                <span style="font-family: 'Strjmono'; color: ${tx.status === 'success' ? 'rgb(29, 205, 159)' : '#dc3545'}; font-size: 16px;">
+                                    ${tx.status.toUpperCase()} 
+                                </span> 
+                                <span style="color: #FFF8EC;">
+                                    | ₹${amountINR} to ${tx.recipient} 
+                                </span>
+                                <span style="font-size: 14px; color: #6c757d; display: block;">
+                                    ID: ${tx.id} (${new Date(tx.date).toLocaleDateString()})
+                                </span>
+                            </div>
+                        `;
+                    });
+                }
+
+                document.getElementById('total-spent-display').innerHTML = `₹${totalSpent.toFixed(2)}`;
+                document.getElementById('transaction-history').innerHTML = historyHTML;
+
+            } catch (error) {
+                console.error("Error fetching history:", error);
+                document.getElementById('transaction-history').innerHTML = '<p style="color: #dc3545;">Failed to load transaction history.</p>';
+            }
+        }
+        
+        async function logout() {
+            // ... (Your standard logout function)
+            try { await auth.signOut(); } catch (error) { console.error("Firebase Sign Out Error:", error); } 
+            finally { localStorage.removeItem('user'); window.location.href = 'login.html'; }
+        }
+    </script>
+    <div class="footer">
+            <div class="footer-left">
+                <div class="footer-part-1">
+                    <img src="LOGO.jpeg" class="footer-logo">
+                    <div class="company-name">
+                        Pace
+                    </div>
+                    <img src="svgs/Line 10.svg" class="line">
+                    <div class="company-tegline">
+                        A Payment app That simplifies life
+                    </div>
+                </div>
+                <div class="footer-part-2">
+                    Get updates on fun stuff you probably want to know about in your inbox.
+                </div>
+                <div class="footer-part-3">
+                    <img src="svgs/twitter.svg" class="twitterf">
+                    <img src="svgs/facebook.svg" class="facebookf">
+                    <img src="svgs/youtube.svg" class="youtubef">
+                    <img src="svgs/instagram.svg" class="instagramf">
+                    <img src="svgs/linkedin.svg" class="linkedinf">
+                </div>
+                <div class="footer-part-4">
+                    <div class="left-sec">
+                        <ul>
+                            <li class="faq">FAQs</li>
+                            <li class="support">Support</li>
+                            <li class="live-chat">Live Chat</li>
+                        </ul>
+                    </div>
+                    <div class="middle">
+                        <ul>
+                            <li class="phnumber">
+                                <img src="svgs/call.svg" class="call">
+                                +91 7010578495
+                            </li>
+                            <li class="mail">
+                                <img src="svgs/mail.svg" class="mailf">
+                                <a href="kashiramanathan2@gmail.com" target="_blank" rel="noopener noreferrer">kashiramanathan2@gmail.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-right">
+                <img src="svgs/bing_generated_qrcode 1.svg" class="qr">
+            </div>
+        </div>
+</body>
+</html>

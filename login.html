@@ -22,7 +22,7 @@
         <div class="header">
             <img src="LOGO.jpeg" class="logo">
             <div class="hometag" onclick="window.location.href='homepage.html'">Home</div>
-            <div class="personal-tag">Personal</div>
+            <div class="personal-tag">Dashboard</div>
             <div class="useful-info-tag-container">
                 <div class="useful-info-tag">Policies</div>
                 <div class="policy-dropdown">
@@ -151,7 +151,12 @@
                     window.location.href = 'profilepage.html';
                 }
             });
-
+            document.addEventListener('DOMContentLoaded', function() {
+                    const loginButton = document.querySelector('.personal-tag');
+                    loginButton.addEventListener('click', function() {
+                    window.location.href = 'dashboard.html'; // Replace with your login page file name
+                });
+            });
             document.addEventListener('DOMContentLoaded', function() {
             const loginBtn = document.getElementById('login-btn');
             const resendBtn = document.getElementById('resend-btn');

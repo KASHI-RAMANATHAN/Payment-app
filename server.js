@@ -8,6 +8,7 @@ const razorpayInstance = new Razorpay({
     key_id: process.env.KEY_ID, // PASTE YOUR KEY ID
     key_secret: process.env.KEY_SECRET, // PASTE YOUR KEY SECRET
 });
+const transactionHistory = {}; 
 const app = express();
 const PORT = process.env.PORT || 5000;
 // Middleware
@@ -21,7 +22,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/create-razorpay-order', async (req, res) => {
-    const { amount } = req.body;
+    const { amount, userEmail, recipient } = req.body;
     const amountInPaise = Math.round(parseFloat(amount) * 100);
 
     if (isNaN(amountInPaise) || amountInPaise < 100) {
@@ -36,6 +37,18 @@ app.post('/api/create-razorpay-order', async (req, res) => {
 
     try {
         const order = await razorpayInstance.orders.create(options);
+        const newTransaction = {
+            id: order.id,
+            amount: amountInPaise, // Stored in paise
+            recipient: recipient,
+            status: 'success',
+            date: new Date().toISOString()
+        };
+        if (!transactionHistory[userEmail]) {
+            transactionHistory[userEmail] = [];
+        }
+        transactionHistory[userEmail].push(newTransaction);
+        // END NEW STORAGE
         res.json({
             orderId: order.id,
             amount: amount,
@@ -45,6 +58,17 @@ app.post('/api/create-razorpay-order', async (req, res) => {
         console.error('Razorpay Order Creation Error:', error);
         res.status(500).json({ error: error.message });
     }
+});
+
+// API Endpoint to Retrieve User History    READ THIS CAREFULLY
+app.get('/api/payments/history', (req, res) => {
+    const userEmail = req.query.email;
+    if (!userEmail) {
+        return res.status(400).json({ error: 'Email required for history lookup.' });
+    }
+    // Return history for the user, or an empty array if none exists
+    const history = transactionHistory[userEmail] || [];
+    res.json(history);
 });
 
 // Health check endpoint

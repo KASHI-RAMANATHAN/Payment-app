@@ -22,7 +22,7 @@
         <div class="header">
             <img src="LOGO.jpeg" class="logo">
             <div class="hometag" onclick="window.location.href='homepage.html'">Home</div>
-            <div class="personal-tag">Personal</div>
+            <div class="personal-tag">Dashboard</div>
             <div class="useful-info-tag-container">
                 <div class="useful-info-tag">Policies</div>
                 <div class="policy-dropdown">
@@ -106,6 +106,12 @@
             </div>
         </div>
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                    const loginButton = document.querySelector('.personal-tag');
+                    loginButton.addEventListener('click', function() {
+                    window.location.href = 'dashboard.html'; // Replace with your login page file name
+                });
+            });
             // ✅ YOUR REAL FIREBASE CONFIG - This will fix the error!
             const firebaseConfig = {
                 apiKey: "AIzaSyCxZU0md5obSR4UG5UEemhDbZS6BNXuUAA",
@@ -208,7 +214,7 @@
                         signupBtn.style.backgroundColor = ''; // Reset color
                     }
                 });
-
+                
                 // Utility functions (Keep your existing ones)
                 // ... (showError, showMessage, clearMessages are assumed to be defined here)
                 function showError(message) {

@@ -6,12 +6,20 @@
         <link rel="icon" href="/LOGO-top.svg" type="vector/svg+xml" /> 
         <link rel="icon" href="/LOGO-top.svg" type="vector/svg+xml" /> 
         <link rel="shortcut icon" href="/LOGO-top.svg" type="vector/svg+xml" />
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                    const loginButton = document.querySelector('.personal-tag');
+                    loginButton.addEventListener('click', function() {
+                    window.location.href = 'dashboard.html'; // Replace with your login page file name
+                });
+            });
+        </script>
     </head>
     <body style="background-color: black; color: #FFF8EC; font-family: 'Poppins', sans-serif;">
         <div class="header">
             <img src="LOGO.jpeg" class="logo" onclick="window.location.href='homepage.html'">
             <div class="hometag" onclick="window.location.href='homepage.html'">Home</div>
-            <div class="personal-tag">Personal</div>
+            <div class="personal-tag">Dashboard</div>
             <div class="useful-info-tag">Useful Info</div>
             <button class="login-button" onclick="window.location.href='login.html'">Log In</button>
         </div>
