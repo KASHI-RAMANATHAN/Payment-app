@@ -40,8 +40,8 @@
       "dest": "/LOGO.jpeg"
     },
     {
-      "src": "/myface.png",
-      "dest": "/myface.png"
+      "src": "/myface.jpeg",
+      "dest": "/myface.jpeg"
     }, 
     {
       "src": "/public-k/(.*)",
